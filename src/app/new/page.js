@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useTasks } from "@/context/TasksContext";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -16,9 +17,11 @@ const Page = ({ params }) => {
 
   const onSubmit = handleSubmit((data) => {
     if (params.id) {
-      updateTask(params.id, data);
+      updateTask(params.id, data.title, data.description);
+      toast.success("Task updated");
     } else {
       createTask(data.title, data.description);
+      toast.success("Task created");
     }
     router.push("/");
   });
